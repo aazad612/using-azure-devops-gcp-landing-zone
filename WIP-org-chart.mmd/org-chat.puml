@@ -1,0 +1,100 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam defaultTextAlignment left
+top to bottom direction
+
+' === Org root ===
+rectangle "Org: acme-healthcare-org (1234567890)" as ORG
+
+' === Top-level folders ===
+package "fd-shared-services" as F_SHARED {
+  [prj-shared-network]
+  [prj-central-logging]
+  [prj-security-tooling]
+}
+
+package "fd-healthcare-platform" as F_HC
+package "fd-business-units"     as F_BU
+package "fd-sandboxes"          as F_SBX
+
+' Org → top folders
+ORG --> F_SHARED
+ORG --> F_HC
+ORG --> F_BU
+ORG --> F_SBX
+
+
+' === Healthcare platform subfolders ===
+package "fd-data-engineering" as F_DE {
+  [prj-de-synthea-dev]
+  [prj-de-synthea-qa]
+  [prj-de-synthea-prod]
+}
+
+package "fd-analytics-bi" as F_BI {
+  [prj-bi-core-placeholder]
+  [prj-bi-selfservice-placeholder]
+}
+
+package "fd-clinical-integration" as F_INT {
+  [prj-fhir-apis-placeholder]
+  [prj-hl7-gateway-placeholder]
+}
+
+F_HC --> F_DE
+F_HC --> F_BI
+F_HC --> F_INT
+
+' Optional arrows folder → projects (for clarity)
+F_DE  --> [prj-de-synthea-dev]
+F_DE  --> [prj-de-synthea-qa]
+F_DE  --> [prj-de-synthea-prod]
+F_BI  --> [prj-bi-core-placeholder]
+F_BI  --> [prj-bi-selfservice-placeholder]
+F_INT --> [prj-fhir-apis-placeholder]
+F_INT --> [prj-hl7-gateway-placeholder]
+
+
+' === Business units and their projects ===
+package "fd-clinical-ops" as F_CLIN {
+  [prj-epic-integration-placeholder]
+  [prj-ed-operations-placeholder]
+}
+
+package "fd-finance" as F_FIN {
+  [prj-finance-placeholder]
+}
+
+package "fd-hr" as F_HR {
+  [prj-hr-placeholder]
+}
+
+package "fd-pop-health" as F_POP {
+  [prj-pophealth-analytics-placeholder]
+}
+
+F_BU --> F_CLIN
+F_BU --> F_FIN
+F_BU --> F_HR
+F_BU --> F_POP
+
+F_CLIN --> [prj-epic-integration-placeholder]
+F_CLIN --> [prj-ed-operations-placeholder]
+F_FIN  --> [prj-finance-placeholder]
+F_HR   --> [prj-hr-placeholder]
+F_POP  --> [prj-pophealth-analytics-placeholder]
+
+
+' === Sandboxes ===
+package "fd-sandboxes-projects" as F_SBX_PRJ {
+  [prj-sbx-data-eng]
+  [prj-sbx-ml]
+  [prj-sbx-analyst]
+}
+
+F_SBX --> F_SBX_PRJ
+F_SBX_PRJ --> [prj-sbx-data-eng]
+F_SBX_PRJ --> [prj-sbx-ml]
+F_SBX_PRJ --> [prj-sbx-analyst]
+
+@enduml

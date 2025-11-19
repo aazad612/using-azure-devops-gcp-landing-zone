@@ -1,0 +1,39 @@
+digraph gcp_org {
+  rankdir=TB;
+  node [shape=box];
+
+  ORG      [label="Org: acme-healthcare-org (1234567890)"];
+  F_SHARED [label="Folder: fd-shared-services"];
+  F_HC     [label="Folder: fd-healthcare-platform"];
+  F_BU     [label="Folder: fd-business-units"];
+  F_SBX    [label="Folder: fd-sandboxes"];
+
+  ORG -> F_SHARED;
+  ORG -> F_HC;
+  ORG -> F_BU;
+  ORG -> F_SBX;
+
+  F_SHARED -> P_NET;
+  F_SHARED -> P_LOG;
+  F_SHARED -> P_SEC;
+
+  P_NET [label="prj-shared-network"];
+  P_LOG [label="prj-central-logging"];
+  P_SEC [label="prj-security-tooling"];
+
+  F_HC -> F_DE;
+  F_HC -> F_BI;
+  F_HC -> F_INT;
+
+  F_DE  [label="Folder: fd-data-engineering"];
+  F_BI  [label="Folder: fd-analytics-bi"];
+  F_INT [label="Folder: fd-clinical-integration"];
+
+  F_DE -> P_DE_DEV;
+  F_DE -> P_DE_QA;
+  F_DE -> P_DE_PROD;
+
+  P_DE_DEV  [label="prj-de-synthea-dev"];
+  P_DE_QA   [label="prj-de-synthea-qa"];
+  P_DE_PROD [label="prj-de-synthea-prod"];
+}

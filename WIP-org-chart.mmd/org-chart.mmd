@@ -1,0 +1,81 @@
+flowchart TB
+  %% =========================
+  %% ORG NODE
+  %% =========================
+  org["Org: acme-healthcare-org (1234567890)"]
+
+  %% =========================
+  %% SHARED / PLATFORM FOLDER
+  %% =========================
+  subgraph fd-shared["Folder: fd-shared-services"]
+    prj-net["Project: prj-shared-network"]
+    prj-log["Project: prj-central-logging"]
+    prj-sec["Project: prj-security-tooling"]
+  end
+
+  %% =========================
+  %% HEALTHCARE PLATFORM (DATA, ANALYTICS, INTEGRATIONS)
+  %% =========================
+  subgraph fd-hc["Folder: fd-healthcare-platform"]
+    
+    %% Core data engineering platform for Synthea medallion project
+    subgraph fd-de["Folder: fd-data-engineering"]
+      prj-de-dev["Project: prj-de-synthea-dev"]
+      prj-de-qa["Project: prj-de-synthea-qa"]
+      prj-de-prod["Project: prj-de-synthea-prod"]
+    end
+
+    %% Downstream analytics / BI placeholders
+    subgraph fd-analytics["Folder: fd-analytics-bi"]
+      prj-bi-core["Project: prj-bi-core-placeholder"]
+      prj-bi-self["Project: prj-bi-selfservice-placeholder"]
+    end
+
+    %% Integration / interoperability placeholders (FHIR, HL7, APIs)
+    subgraph fd-integration["Folder: fd-clinical-integration"]
+      prj-fhir["Project: prj-fhir-apis-placeholder"]
+      prj-hl7["Project: prj-hl7-gateway-placeholder"]
+    end
+
+  end
+
+  %% =========================
+  %% BUSINESS UNIT FOLDERS
+  %% =========================
+  subgraph fd-bu["Folder: fd-business-units"]
+
+    subgraph fd-clin["Folder: fd-clinical-ops"]
+      prj-epic-int["Project: prj-epic-integration-placeholder"]
+      prj-ed-ops["Project: prj-ed-operations-placeholder"]
+    end
+
+    subgraph fd-fin["Folder: fd-finance"]
+      prj-fin["Project: prj-finance-placeholder"]
+    end
+
+    subgraph fd-hr["Folder: fd-hr"]
+      prj-hr["Project: prj-hr-placeholder"]
+    end
+
+    subgraph fd-pophealth["Folder: fd-pop-health"]
+      prj-pophealth["Project: prj-pophealth-analytics-placeholder"]
+    end
+
+  end
+
+  %% =========================
+  %% SANDBOX / EXPERIMENTATION
+  %% =========================
+  subgraph fd-sbx["Folder: fd-sandboxes"]
+    prj-sbx-de["Project: prj-sbx-data-eng"]
+    prj-sbx-ml["Project: prj-sbx-ml"]
+    prj-sbx-analyst["Project: prj-sbx-analyst"]
+  end
+
+  %% =========================
+  %% EDGES
+  %% =========================
+  org --> fd-shared
+  org --> fd-hc
+  org --> fd-bu
+  org --> fd-sbx
